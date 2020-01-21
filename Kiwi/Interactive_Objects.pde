@@ -26,8 +26,6 @@ abstract class Sprite {
   public int getYSize() {
     return ySize;
   }
- 
-  //public abstract boolean isTouching(Sprite sprite, Sprite otherObject);
 }
 
 class Item extends Sprite {
@@ -46,9 +44,19 @@ class Item extends Sprite {
     this.graphicFile = graphicFile;
   }
   
-  public boolean isTouching(Item object, Sprite otherObject) {
-    return !((object.x + object.xSize) > (otherObject.getX()) || (object.x) < (otherObject.getX() + otherObject.getXSize()) || (object.y) > (otherObject.getY() + otherObject.getYSize()) || (object.y + object.ySize) < (otherObject.getY()));
-  }
+  //public boolean isTouching(Item item, Sprite otherObject) {
+  //  if(item.x <= otherObject.getX() && (item.x + item.xSize) >= otherObject.getX()) {
+  //    if(item.y <= (otherObject.getY() + otherObject.getYSize())) {
+  //      return true;
+  //    }
+  //    else {
+  //      return false;
+  //    }
+  //  }
+  //  else {
+  //    return false;
+  //  }
+  //}
   
   public PImage loadGraphic(String graphicFile) {
     PImage itemGraphic;
@@ -65,10 +73,6 @@ class Player extends Sprite {
     this.y = y;
     this.xSize = xSize;
     this.ySize = ySize;
-  }
-  
-  public boolean isTouching(Player player, Sprite otherObject) {
-    return !((player.x + player.xSize) > (otherObject.getX()) || (player.x) < (otherObject.getX() + otherObject.getXSize()) || (player.y) > (otherObject.getY() + otherObject.getYSize()) || (player.y + player.ySize) < (otherObject.getY()));
   }
   
   boolean flipOrNah;
@@ -97,7 +101,17 @@ class Block extends Sprite {
   }
   
   public boolean isTouching(Block block, Sprite otherObject) {
-    return !((block.x + block.xSize) > (otherObject.getX()) || (block.x) < (otherObject.getX() + otherObject.getXSize()) || (block.y) > (otherObject.getY() + otherObject.getYSize()) || (block.y + block.ySize) < (otherObject.getY()));
+    if(block.x <= otherObject.getX() && (block.x + block.xSize) >= otherObject.getX()) {
+      if(block.y <= (otherObject.getY() + otherObject.getYSize())) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
   }
   
   int blockNumber;
