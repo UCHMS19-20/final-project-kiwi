@@ -10,9 +10,6 @@ abstract class Sprite {
   int xSize;
   int ySize;
   
-  //Graphics
-  String graphicFile
-  
   //Return variables
   public int getX() {
     return x;
@@ -30,12 +27,13 @@ abstract class Sprite {
     return ySize;
   }
  
-  public abstract boolean isTouching(Player player, Sprite otherObject);
+  //public abstract boolean isTouching(Sprite sprite, Sprite otherObject);
 }
 
 class Item extends Sprite {
   String type;
   String message;
+  String graphicFile;
   
   //Declare Item constructor
   Item(int x, int y, int xSize, int ySize, String type, String message, String graphicFile) {
@@ -49,10 +47,10 @@ class Item extends Sprite {
   }
   
   public boolean isTouching(Item object, Sprite otherObject) {
-    return !((object.x + object.xSize) > (otherObject.getX()) || (object.x) < (otherObject.getX() + otherObject.getXSize()) || (object.y) > (otherObject.getY() + otherObject.getYSize()) || (object.y + object.ySize) < (otherObject.getY));
+    return !((object.x + object.xSize) > (otherObject.getX()) || (object.x) < (otherObject.getX() + otherObject.getXSize()) || (object.y) > (otherObject.getY() + otherObject.getYSize()) || (object.y + object.ySize) < (otherObject.getY()));
   }
   
-  public PImage loadGraphic(Item object, String graphicFile) {
+  public PImage loadGraphic(String graphicFile) {
     PImage itemGraphic;
     itemGraphic = loadImage(graphicFile);
     return itemGraphic;
@@ -61,6 +59,7 @@ class Item extends Sprite {
 }
 
 class Player extends Sprite {
+  //Declare Player constructor
   Player(int x, int y, int xSize, int ySize) {
     this.x = x;
     this.y = y;
@@ -69,12 +68,44 @@ class Player extends Sprite {
   }
   
   public boolean isTouching(Player player, Sprite otherObject) {
-    return !((player.x + player.xSize) > (otherObject.getX()) || (player.x) < (otherObject.getX() + otherObject.getXSize()) || (player.y) > (otherObject.getY() + otherObject.getYSize()) || (player.y + player.ySize) < (otherObject.getY));
+    return !((player.x + player.xSize) > (otherObject.getX()) || (player.x) < (otherObject.getX() + otherObject.getXSize()) || (player.y) > (otherObject.getY() + otherObject.getYSize()) || (player.y + player.ySize) < (otherObject.getY()));
   }
   
-  public PImage loadGraphic(Item object, String graphicFile) {
+  boolean flipOrNah;
+  
+  public PImage loadGraphic(boolean flipOrNah) {
+    PImage itemGraphic;
+    if(flipOrNah) {
+      itemGraphic = loadImage("Kiwi_Sprite.png");
+    }
+    else {
+      itemGraphic = loadImage("Kiwi_Sprite_Flipped.png");
+    }
+    return itemGraphic;
+  }
+}
+
+class Block extends Sprite {
+  String graphicFile;
+  
+  Block(int x, int y, int xSize, int ySize, String graphicFile) {
+    this.x = x;
+    this.y = y;
+    this.xSize = xSize;
+    this.ySize = ySize;
+    this.graphicFile = graphicFile;
+  }
+  
+  public boolean isTouching(Block block, Sprite otherObject) {
+    return !((block.x + block.xSize) > (otherObject.getX()) || (block.x) < (otherObject.getX() + otherObject.getXSize()) || (block.y) > (otherObject.getY() + otherObject.getYSize()) || (block.y + block.ySize) < (otherObject.getY()));
+  }
+  
+  int blockNumber;
+  int platformHeight;
+  
+  public void drawPlatform(int blockNumber, int platformHeight) {
     PImage itemGraphic;
     itemGraphic = loadImage(graphicFile);
-    return itemGraphic;
+    image(itemGraphic, x + blockNumber, platformHeight);
   }
 }
