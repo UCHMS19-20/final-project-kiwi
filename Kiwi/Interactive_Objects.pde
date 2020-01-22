@@ -1,13 +1,13 @@
 abstract class Sprite {
-  //Coordinates
+  //coordinates
   int x;
   int y;
   
-  //Length and width of image
+  //length and width of image
   int xSize;
   int ySize;
   
-  //Return variables
+  //return variables for any entity
   public int getX() {
     return x;
   }
@@ -30,7 +30,7 @@ class Item extends Sprite {
   String message;
   String graphicFile;
   
-  //Declare Item constructor
+  //declare Item constructor
   Item(int x, int y, int xSize, int ySize, String type, String message, String graphicFile) {
     this.x = x;
     this.y = y;
@@ -41,20 +41,7 @@ class Item extends Sprite {
     this.graphicFile = graphicFile;
   }
   
-  //public boolean isTouching(Item item, Sprite otherObject) {
-  //  if(item.x <= otherObject.getX() && (item.x + item.xSize) >= otherObject.getX()) {
-  //    if(item.y <= (otherObject.getY() + otherObject.getYSize())) {
-  //      return true;
-  //    }
-  //    else {
-  //      return false;
-  //    }
-  //  }
-  //  else {
-  //    return false;
-  //  }
-  //}
-  
+  //load image of item
   public PImage loadGraphic(String graphicFile) {
     PImage itemGraphic;
     itemGraphic = loadImage(graphicFile);
@@ -64,7 +51,7 @@ class Item extends Sprite {
 }
 
 class Player extends Sprite {
-  //Declare Player constructor
+  //declare Player constructor
   Player(int x, int y, int xSize, int ySize) {
     this.x = x;
     this.y = y;
@@ -85,24 +72,12 @@ class Player extends Sprite {
     return itemGraphic;
   }
   
-  //public boolean isTouching(Sprite otherObject) {
-  //  if(this.x <= otherObject.getX()) {
-  //    if(this.y >= (otherObject.getY() + otherObject.getYSize())) {
-  //      return true;
-  //    }
-  //    else {
-  //      return false;
-  //    }
-  //  }
-  //  else {
-  //    return false;
-  //  }
-  //}
 }
 
 class Block extends Sprite {
   String graphicFile;
   
+  //declare Block constructor
   Block(int x, int y, int xSize, int ySize, String graphicFile) {
     this.x = x;
     this.y = y;
@@ -110,7 +85,8 @@ class Block extends Sprite {
     this.ySize = ySize;
     this.graphicFile = graphicFile;
   }
-
+  
+  //draw a platform of blocks
   public void drawPlatform(int xStart, int xEnd, int platformHeight) {
     PImage itemGraphic;
     itemGraphic = loadImage(graphicFile);
@@ -122,10 +98,11 @@ class Block extends Sprite {
     }
   }
   
+  //check if something is touching the top surface of the platform
   public boolean isTouching(int xStart, int xEnd, Sprite otherObject) {
     if(xStart <= otherObject.getX() && xEnd >= otherObject.getX()) {
       if(this.y <= (otherObject.getY() + otherObject.getYSize())) {
-        print(otherObject.getX());
+        print("touching");
         return true;
       }
       else {
@@ -134,7 +111,7 @@ class Block extends Sprite {
       }
     }
     else {
-      print(xEnd);
+      print("cri");
       return false;
     }
   }

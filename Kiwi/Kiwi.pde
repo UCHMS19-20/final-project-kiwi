@@ -5,8 +5,9 @@ PImage player;
 PImage playerFlipped;
 int playerX;
 int playerY = 750;
-int playerSpeed;
-int gravity = 20;
+float playerXSpeed;
+float playerYSpeed;
+float gravity = 0.5;
 boolean direction;
 
 //create objects
@@ -27,16 +28,16 @@ void draw() {
   
   Metal.drawPlatform(platformXS[0], platformXE[0], platformY[0]);
   
-  playerY += playerSpeed;
+  playerX += playerXSpeed;
+  playerY += playerYSpeed;
   
   image(KiwiBird.loadGraphic(direction), playerX, playerY);
   
-  if(Metal.isTouching(platformXS[0], platformXE[0], KiwiBird)) {
-    playerSpeed = 0;
-    print("touching");
+  if(!(Metal.isTouching(platformXS[0], platformXE[0], KiwiBird))) {
+    playerYSpeed += gravity;
   }
   else {
-    playerSpeed += gravity;
+    playerYSpeed = 0;
   }
 
 }
@@ -45,15 +46,45 @@ void keyPressed() {
   if(key == CODED) {
     if(keyCode == RIGHT) {
       direction = true;
-      playerX += 10;
+      playerXSpeed += 10;
+      
+      if(playerXSpeed >= 20) {
+        playerXSpeed = 0;
+      }
     }
     if(keyCode == LEFT) {
       direction = false;
-      playerX -= 10;
+      playerXSpeed -= 10;
+      
+      if(playerXSpeed <= -20) {
+        playerXSpeed = 0;
+      }
     }
     if(keyCode == UP) {
       if(Metal.isTouching(platformXS[0], platformXE[0], KiwiBird)) {
-        playerSpeed = -25;
+        playerYSpeed = -200;
+      }
+      
+      if(playerYSpeed <= -250) {
+        playerYSpeed = 0;
+      }
+    }
+  }
+}
+
+void keyReleased() {
+  if(key == CODED) {
+    if(keyCode == RIGHT) {
+      direction = true;
+      playerXSpeed = 0;
+    }
+    if(keyCode == LEFT) {
+      direction = false;
+      playerXSpeed = 0;
+    }
+    if(keyCode == UP) {
+      if(Metal.isTouching(platformXS[0], platformXE[0], KiwiBird)) {
+        playerYSpeed = 0;
       }
     }
   }
