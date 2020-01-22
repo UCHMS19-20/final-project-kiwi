@@ -1,15 +1,18 @@
+//create variables
 int metalX;
 int metalY;
 PImage player;
 PImage playerFlipped;
-int playerX = 0;
+int playerX;
 int playerY = 750;
 int playerSpeed;
-int gravity = 10;
+int gravity = 20;
 boolean direction;
+
+//create objects
 Block Metal = new Block(metalX, metalY, 50, 50, "Platform_Metal.jpg");
 Player KiwiBird = new Player(playerX, playerY, 100, 100);
-Item KiwiFruit = new Item(playerX, 800, 50, 50, "Kiwi", "Fruity", "Kiwi_Fruit.png");
+Item KiwiFruit = new Item(playerX, 800, 50, 50, "Kiwi", "insert message here", "Kiwi_Fruit.png");
 
 void setup() {
   frameRate(70);
@@ -18,22 +21,24 @@ void setup() {
 }
 
 void draw() {
+  //redraw background constantly to update screen
   background(100);
-  for(int i = 0; i <= 800; i += 50) {
-    Metal.drawPlatform(i, 850);
-  }
-  image(KiwiBird.loadGraphic(direction), playerX, playerY);
+  Player KiwiBird = new Player(playerX, playerY, 100, 100);
   
-  int nextY = playerY + playerSpeed;
-  playerSpeed += gravity;
+  Metal.drawPlatform(platformXS[0], platformXE[0], platformY[0]);
   
-  if(Metal.isTouching(Metal, KiwiBird)) {
-    playerSpeed = 0;
-  }
-  
-  playerY = nextY;
   playerY += playerSpeed;
   
+  image(KiwiBird.loadGraphic(direction), playerX, playerY);
+  
+  if(Metal.isTouching(platformXS[0], platformXE[0], KiwiBird)) {
+    playerSpeed = 0;
+    print("touching");
+  }
+  else {
+    playerSpeed += gravity;
+  }
+
 }
 
 void keyPressed() {
@@ -47,8 +52,8 @@ void keyPressed() {
       playerX -= 10;
     }
     if(keyCode == UP) {
-      if(Metal.isTouching(Metal, KiwiBird)) {
-        playerSpeed = -15;
+      if(Metal.isTouching(platformXS[0], platformXE[0], KiwiBird)) {
+        playerSpeed = -25;
       }
     }
   }

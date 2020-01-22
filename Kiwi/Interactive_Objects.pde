@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 abstract class Sprite {
   //Coordinates
   int x;
@@ -87,6 +84,20 @@ class Player extends Sprite {
     }
     return itemGraphic;
   }
+  
+  //public boolean isTouching(Sprite otherObject) {
+  //  if(this.x <= otherObject.getX()) {
+  //    if(this.y >= (otherObject.getY() + otherObject.getYSize())) {
+  //      return true;
+  //    }
+  //    else {
+  //      return false;
+  //    }
+  //  }
+  //  else {
+  //    return false;
+  //  }
+  //}
 }
 
 class Block extends Sprite {
@@ -99,27 +110,33 @@ class Block extends Sprite {
     this.ySize = ySize;
     this.graphicFile = graphicFile;
   }
+
+  public void drawPlatform(int xStart, int xEnd, int platformHeight) {
+    PImage itemGraphic;
+    itemGraphic = loadImage(graphicFile);
+    
+    for(int i = xStart; i <= xEnd; i += 50) {
+      this.x = i;
+      this.y = platformHeight;
+      image(itemGraphic, i, platformHeight);
+    }
+  }
   
-  public boolean isTouching(Block block, Sprite otherObject) {
-    if(block.x <= otherObject.getX() && (block.x + block.xSize) >= otherObject.getX()) {
-      if(block.y <= (otherObject.getY() + otherObject.getYSize())) {
+  public boolean isTouching(int xStart, int xEnd, Sprite otherObject) {
+    if(xStart <= otherObject.getX() && xEnd >= otherObject.getX()) {
+      if(this.y <= (otherObject.getY() + otherObject.getYSize())) {
+        print(otherObject.getX());
         return true;
       }
       else {
+        print("oop");
         return false;
       }
     }
     else {
+      print(xEnd);
       return false;
     }
   }
   
-  int blockNumber;
-  int platformHeight;
-  
-  public void drawPlatform(int blockNumber, int platformHeight) {
-    PImage itemGraphic;
-    itemGraphic = loadImage(graphicFile);
-    image(itemGraphic, x + blockNumber, platformHeight);
-  }
 }
