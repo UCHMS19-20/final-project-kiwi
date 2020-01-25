@@ -25,13 +25,13 @@ abstract class Sprite {
   }
 }
 
-class Item extends Sprite {
+class Inspectable extends Sprite {
   String type;
   String message;
   String graphicFile;
   
-  //declare Item constructor
-  Item(int x, int y, int xSize, int ySize, String type, String message, String graphicFile) {
+  //declare Inspectable constructor
+  Inspectable(int x, int y, int xSize, int ySize, String type, String message, String graphicFile) {
     this.x = x;
     this.y = y;
     this.xSize = xSize;
@@ -50,7 +50,7 @@ class Item extends Sprite {
   
 }
 
-class Ladder extends Sprite{
+class Ladder extends Sprite {
   String graphicFile = "Ladder.png";
   
   Ladder(int x, int y, int xSize, int ySize) {
