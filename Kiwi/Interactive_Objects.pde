@@ -42,12 +42,32 @@ class Item extends Sprite {
   }
   
   //load image of item
-  public PImage loadGraphic(String graphicFile) {
+  public PImage loadGraphic() {
     PImage itemGraphic;
-    itemGraphic = loadImage(graphicFile);
+    itemGraphic = loadImage(this.graphicFile);
     return itemGraphic;
   }
   
+}
+
+class Ladder extends Sprite{
+  String graphicFile = "Ladder.png";
+  
+  Ladder(int x, int y, int xSize, int ySize) {
+    this.x = x;
+    this.y = y;
+    this.xSize = xSize;
+    this.ySize = ySize;
+  }
+  
+  public void drawLadder() {
+    PImage ladderGraphic;
+    ladderGraphic = loadImage(graphicFile);
+    
+    for(int i = this.y; i <= (this.y + this.ySize); i += 100) {
+      image(ladderGraphic, this.x, i);
+    }
+  }
 }
 
 class Platform extends Sprite {
@@ -98,9 +118,9 @@ class Player extends Sprite {
     return itemGraphic;
   }
   
-  public boolean isTouching(Platform platform) {
-    if((this.x + this.xSize) >= platform.getX() && this.x <= (platform.getX() + platform.getXSize())) {
-      if((this.y + this.ySize) >= platform.getY() ) {
+  public boolean isTouchingP(Platform platform) {
+    if(((this.x + this.xSize) >= platform.getX()) && (this.x <= (platform.getX() + platform.getXSize()))) {
+      if(((this.y + this.ySize) >= platform.getY()) && ((this.y + this.ySize) <= (platform.getY() + platform.getYSize()))) {
         return true;
       }
       else {
@@ -108,10 +128,21 @@ class Player extends Sprite {
       }
     }
     else {
-      print("sad");
       return false;
     }
   }
   
-  
+  public boolean isTouchingL(Ladder ladder) {
+    if(((this.x + this.xSize) >= ladder.getX()) && (this.x <= (ladder.getX() + ladder.getXSize()))) {
+      if(((this.y + this.ySize) >= ladder.getY()) && (this.y <= (ladder.getY() + ladder.getYSize()))) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
+  }
 }
