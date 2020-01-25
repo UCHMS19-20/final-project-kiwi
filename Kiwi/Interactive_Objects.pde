@@ -50,6 +50,32 @@ class Item extends Sprite {
   
 }
 
+class Platform extends Sprite {
+  String type;
+  String graphicFile;
+  
+  Platform(int x, int y, int xSize, int ySize, String type) {
+    this.x = x;
+    this.y = y;
+    this.xSize = xSize;
+    this.ySize = ySize;
+    this.type = type;
+    
+    if(type == "Metal") {
+      this.graphicFile = "Platform_Metal.jpg";
+    }
+  }
+  
+  public void drawPlatform() {
+    PImage blockGraphic;
+    blockGraphic = loadImage(graphicFile);
+    
+    for(int i = this.x; i <= (this.x + this.xSize); i += 50) {
+      image(blockGraphic, i, this.y);
+    }
+  } 
+}
+
 class Player extends Sprite {
   //declare Player constructor
   Player(int x, int y, int xSize, int ySize) {
@@ -72,48 +98,20 @@ class Player extends Sprite {
     return itemGraphic;
   }
   
-}
-
-class Block extends Sprite {
-  String graphicFile;
-  
-  //declare Block constructor
-  Block(int x, int y, int xSize, int ySize, String graphicFile) {
-    this.x = x;
-    this.y = y;
-    this.xSize = xSize;
-    this.ySize = ySize;
-    this.graphicFile = graphicFile;
-  }
-  
-  //draw a platform of blocks
-  public void drawPlatform(int xStart, int xEnd, int platformHeight) {
-    PImage itemGraphic;
-    itemGraphic = loadImage(graphicFile);
-    
-    for(int i = xStart; i <= xEnd; i += 50) {
-      this.x = i;
-      this.y = platformHeight;
-      image(itemGraphic, i, platformHeight);
-    }
-  }
-  
-  //check if something is touching the top surface of the platform
-  public boolean isTouching(int xStart, int xEnd, Sprite otherObject) {
-    if(xStart <= otherObject.getX() && xEnd >= otherObject.getX()) {
-      if(this.y <= (otherObject.getY() + otherObject.getYSize())) {
-        print("touching");
+  public boolean isTouching(Platform platform) {
+    if((this.x + this.xSize) >= platform.getX() && this.x <= (platform.getX() + platform.getXSize())) {
+      if((this.y + this.ySize) >= platform.getY() ) {
         return true;
       }
       else {
-        print("oop");
         return false;
       }
     }
     else {
-      print("cri");
+      print("sad");
       return false;
     }
   }
+  
   
 }
