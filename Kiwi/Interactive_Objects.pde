@@ -186,4 +186,18 @@ class Player extends Sprite {
       return false;
     }
   }
+  
+  public boolean isTouchingI(Item item) {
+    if(((this.x + this.xSize) >= item.getX()) && (this.x <= (item.getX() + item.getXSize()))) {
+      if(((this.y + this.ySize) >= (item.getY() + 1)) && (this.y <= (item.getY() + item.getYSize()))) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
+  }
 }

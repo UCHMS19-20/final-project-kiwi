@@ -30,6 +30,8 @@ Ladder Ladder1 = new Ladder(300, y2, 150, 100);
 Ladder Ladder2 = new Ladder(500, y3, 150, 500);
 Ladder Ladder3 = new Ladder(700, 650, 150, 100);
 Inspectable LabTable = new Inspectable(200, 650, 500, 200, "Hmmmm, the cabinets seem to be locked.", "Table.png");
+Inspectable Computer = new Inspectable(250, 520, 130, 130, "Press x to view the information on the computer", "Computer.png");
+Item TableKey = new Item(800, 500, 50, 25, "Press x to pick up.", "Key.png");
 
 //create inventory
 Item inventory[] = new Item[5];
@@ -58,6 +60,7 @@ void draw() {
     Platform1.drawPlatform();
     Ladder3.drawLadder();
     LabTable.loadGraphic();
+    Computer.loadGraphic();
     
     if(KiwiBird.isTouchingP(Platform1)) {
       playerY = y1 - 100;
@@ -71,9 +74,12 @@ void draw() {
       playerYSpeed += gravity;
     }
     
-    if(KiwiBird.isTouchingI(LabTable)) {
-      if(spacePressed) {
+    if(spacePressed) {
+      if(KiwiBird.isTouchingI(LabTable)) {
         text(LabTable.getMessage(), 10, 10, 1590, 40);
+      }
+      if(KiwiBird.isTouchingI(Computer)) {
+        text(Computer.getMessage(), 10, 10, 1590, 40);
       }
     }
     
@@ -115,6 +121,7 @@ void draw() {
     Platform3.drawPlatform();
     Platform4.drawPlatform();
     Ladder2.drawLadder();
+    TableKey.loadGraphic();
     
 
     if(KiwiBird.isTouchingP(Platform1)) {
@@ -131,6 +138,12 @@ void draw() {
     }
     else if(!climbing) {
       playerYSpeed += gravity;
+    }
+    
+    if(spacePressed) {
+      if(KiwiBird.isTouchingI(TableKey)) {
+        text(TableKey.getMessage(), 10, 10, 1590, 40);
+      }
     }
     
     if(upPressed) {
