@@ -25,29 +25,56 @@ abstract class Sprite {
   }
 }
 
-class Inspectable extends Sprite {
-  String type;
+class Item extends Sprite {
   String message;
   String graphicFile;
   
-  //declare Inspectable constructor
-  Inspectable(int x, int y, int xSize, int ySize, String type, String message, String graphicFile) {
+  //declare Item constructor
+  Item(int x, int y, int xSize, int ySize, String message, String graphicFile) {
     this.x = x;
     this.y = y;
     this.xSize = xSize;
     this.ySize = ySize;
-    this.type = type;
     this.message = message;
     this.graphicFile = graphicFile;
   }
   
   //load image of item
-  public PImage loadGraphic() {
+  public void loadGraphic() {
     PImage itemGraphic;
     itemGraphic = loadImage(this.graphicFile);
-    return itemGraphic;
+    image(itemGraphic, this.x, this.y);
   }
   
+  public String getMessage() {
+    return this.message;
+  }
+}
+
+class Inspectable extends Sprite {
+  String message;
+  String graphicFile;
+  
+  //declare Inspectable constructor
+  Inspectable(int x, int y, int xSize, int ySize, String message, String graphicFile) {
+    this.x = x;
+    this.y = y;
+    this.xSize = xSize;
+    this.ySize = ySize;
+    this.message = message;
+    this.graphicFile = graphicFile;
+  }
+  
+  //load image of inspectable item
+  public void loadGraphic() {
+    PImage inspGraphic;
+    inspGraphic = loadImage(this.graphicFile);
+    image(inspGraphic, this.x, this.y);
+  }
+  
+  public String getMessage() {
+    return this.message;
+  }
 }
 
 class Ladder extends Sprite {
@@ -135,6 +162,20 @@ class Player extends Sprite {
   public boolean isTouchingL(Ladder ladder) {
     if(((this.x + this.xSize) >= ladder.getX()) && (this.x <= (ladder.getX() + ladder.getXSize()))) {
       if(((this.y + this.ySize) >= ladder.getY()) && (this.y <= (ladder.getY() + ladder.getYSize()))) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
+  }
+  
+  public boolean isTouchingI(Inspectable insp) {
+    if(((this.x + this.xSize) >= insp.getX()) && (this.x <= (insp.getX() + insp.getXSize()))) {
+      if(((this.y + this.ySize) >= (insp.getY() + 1)) && (this.y <= (insp.getY() + insp.getYSize()))) {
         return true;
       }
       else {
