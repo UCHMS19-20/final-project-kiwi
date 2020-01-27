@@ -23,7 +23,7 @@ boolean qPressed;
 int roomNum;
 boolean tableKeyVisible = true;
 String tableMessage = "Hmmmm, the cabinets seem to be locked.";
-String computerMessage = "Press w to view the information on the computer";
+String computerMessage = "Press q to view the information on the computer";
 
 //create objects
 Player KiwiBird = new Player(playerX, playerY, 100, 100);
@@ -46,28 +46,35 @@ void setup() {
   frameRate(70);
   size(1600, 900);
   image(KiwiBird.loadGraphic(true), playerX, playerY);
+  
+  //starting room
   roomNum = 2;
+  
+  //set up text
   PFont thisFont;
   thisFont = createFont("designerblock.ttf", 25);
   textFont(thisFont);
-  //textSize(25);
 }
 
 void draw() {
   //redraw background constantly to update screen
   background(100);
-  Player KiwiBird = new Player(playerX, playerY, 100, 100);
-
   
+  Player KiwiBird = new Player(playerX, playerY, 100, 100);
+  
+  //set player velocities
   playerX += playerXSpeed;
   playerY += playerYSpeed;
   
+  //check the inventory to see whether the player is carrying the key to the cabinets
   for(Item i : inventory) {
+    //open the cabinets if the player has the key
     if(i == TableKey) {
         tableMessage = "The cabinets are open!";
     }
   }
   
+  //set up room 1
   if(roomNum == 1) {
     Platform1.drawPlatform();
     Ladder3.drawLadder();
@@ -97,10 +104,11 @@ void draw() {
     
     if(qPressed) {
       if(KiwiBird.isTouchingI(Computer)) {
-        
+        //this does not exist yet because the graphics are extremely time-consuming
       }
     }
     
+    //climb the ladder
     if(upPressed) {
       if(KiwiBird.isTouchingL(Ladder3)) {
         playerY -= 20;
@@ -108,7 +116,7 @@ void draw() {
       }
     }
   }
-     
+  //set up room 2
   if(roomNum == 2) {
     Platform1.drawPlatform();
     Platform2.drawPlatform();
@@ -126,6 +134,7 @@ void draw() {
       playerYSpeed += gravity;
     }
     
+    //climb ladder
     if(upPressed) {
       if(KiwiBird.isTouchingL(Ladder1)) {
         playerY -= 20;
@@ -133,7 +142,7 @@ void draw() {
       }
     }
   }
-  
+  //set up room 3
   if(roomNum == 3) {
     Platform1.drawPlatform();
     Platform3.drawPlatform();
@@ -165,6 +174,7 @@ void draw() {
       }
     }
     
+    //add key to inventory and hide it from the screen
     if(qPressed) {
       if(KiwiBird.isTouchingI(TableKey)) {
         inventory.add(TableKey);
@@ -180,15 +190,17 @@ void draw() {
     }
   }
   
+  //update position of player
   image(KiwiBird.loadGraphic(direction), playerX, playerY);
   
+  //move player to the next room
   if(playerX > 1600) {
      roomNum += 1; 
      playerX = 0;
     
   }
   
-    
+ 
   if(playerX < 0) {
      roomNum -= 1;
     playerX = 1600;
