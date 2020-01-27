@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.List;
+
 //create variables
 int metalX;
 int metalY;
@@ -5,7 +8,6 @@ PImage player;
 PImage playerFlipped;
 int playerX;
 int playerY = 750;
-int formerpY;
 float playerXSpeed;
 float playerYSpeed;
 float gravity = 0.9;
@@ -17,7 +19,11 @@ int y4 = 550;
 boolean upPressed;
 boolean climbing;
 boolean spacePressed;
+boolean qPressed;
 int roomNum;
+boolean tableKeyVisible = true;
+String tableMessage = "Hmmmm, the cabinets seem to be locked.";
+String computerMessage = "Press w to view the information on the computer";
 
 //create objects
 Player KiwiBird = new Player(playerX, playerY, 100, 100);
@@ -29,12 +35,12 @@ Platform TablePlatform = new Platform(200, 650, 500, 50, "Metal");
 Ladder Ladder1 = new Ladder(300, y2, 150, 100);
 Ladder Ladder2 = new Ladder(500, y3, 150, 500);
 Ladder Ladder3 = new Ladder(700, 650, 150, 100);
-Inspectable LabTable = new Inspectable(200, 650, 500, 200, "Hmmmm, the cabinets seem to be locked.", "Table.png");
-Inspectable Computer = new Inspectable(250, 520, 130, 130, "Press x to view the information on the computer", "Computer.png");
-Item TableKey = new Item(800, 500, 50, 25, "Press x to pick up.", "Key.png");
+Inspectable LabTable = new Inspectable(200, 650, 500, 200, "Table.png");
+Inspectable Computer = new Inspectable(250, 520, 130, 130, "Computer.png");
+Item TableKey = new Item(800, 500, 50, 25, "Press q to pick up.", "Key.png");
 
 //create inventory
-Item inventory[] = new Item[5];
+ArrayList<Item> inventory = new ArrayList<Item>();
 
 void setup() {
   frameRate(70);
@@ -56,6 +62,12 @@ void draw() {
   playerX += playerXSpeed;
   playerY += playerYSpeed;
   
+  for(Item i : inventory) {
+    if(i == TableKey) {
+        tableMessage = "The cabinets are open!";
+    }
+  }
+  
   if(roomNum == 1) {
     Platform1.drawPlatform();
     Ladder3.drawLadder();
@@ -76,10 +88,16 @@ void draw() {
     
     if(spacePressed) {
       if(KiwiBird.isTouchingI(LabTable)) {
-        text(LabTable.getMessage(), 10, 10, 1590, 40);
+        text(tableMessage, 10, 10, 1590, 40);
       }
       if(KiwiBird.isTouchingI(Computer)) {
-        text(Computer.getMessage(), 10, 10, 1590, 40);
+        text(computerMessage, 10, 10, 1590, 40);
+      }
+    }
+    
+    if(qPressed) {
+      if(KiwiBird.isTouchingI(Computer)) {
+        
       }
     }
     
@@ -121,9 +139,10 @@ void draw() {
     Platform3.drawPlatform();
     Platform4.drawPlatform();
     Ladder2.drawLadder();
-    TableKey.loadGraphic();
+    if(tableKeyVisible) {
+      TableKey.loadGraphic();
+    }
     
-
     if(KiwiBird.isTouchingP(Platform1)) {
       playerY = y1 - 100;
       playerYSpeed = 0;
@@ -143,6 +162,13 @@ void draw() {
     if(spacePressed) {
       if(KiwiBird.isTouchingI(TableKey)) {
         text(TableKey.getMessage(), 10, 10, 1590, 40);
+      }
+    }
+    
+    if(qPressed) {
+      if(KiwiBird.isTouchingI(TableKey)) {
+        inventory.add(TableKey);
+        tableKeyVisible = false;
       }
     }
     

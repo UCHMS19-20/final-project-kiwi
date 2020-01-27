@@ -24,6 +24,9 @@ void keyPressed() {
   if(key == ' ') {
     spacePressed = true;
   }
+  if(key == 'q') {
+    qPressed = true;
+  }
 }
 
 void keyReleased() {
@@ -43,5 +46,8 @@ void keyReleased() {
   }
   if(key == ' ') {
     spacePressed = false;
+  }
+  if(key == 'q') {
+    qPressed = false;
   }
 }

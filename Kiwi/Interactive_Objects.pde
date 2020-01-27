@@ -56,12 +56,11 @@ class Inspectable extends Sprite {
   String graphicFile;
   
   //declare Inspectable constructor
-  Inspectable(int x, int y, int xSize, int ySize, String message, String graphicFile) {
+  Inspectable(int x, int y, int xSize, int ySize, String graphicFile) {
     this.x = x;
     this.y = y;
     this.xSize = xSize;
     this.ySize = ySize;
-    this.message = message;
     this.graphicFile = graphicFile;
   }
   
@@ -70,10 +69,6 @@ class Inspectable extends Sprite {
     PImage inspGraphic;
     inspGraphic = loadImage(this.graphicFile);
     image(inspGraphic, this.x, this.y);
-  }
-  
-  public String getMessage() {
-    return this.message;
   }
 }
 
