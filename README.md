@@ -12,11 +12,11 @@ KIWI! is a game inspired by point and click adventure puzzle flash games I enjoy
 
 ## Flowchart
 
-insert flowchart here
+![image](C:\Users\Karen\Desktop\KiwiGameFlowchart.jpg)
 
 ## Presentation
 
-insert presentation here
+https://docs.google.com/presentation/d/19s-_krcHq9pubEwHQau8kWa-ZWdaQJ3gn2ywyYqLMe4/edit?usp=sharing
 
 ## Resources Used
 
